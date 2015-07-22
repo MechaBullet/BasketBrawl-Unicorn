@@ -15,6 +15,7 @@ public class PlayerInfo : MonoBehaviour {
 	Slider meter;
 	Outline outline;
 	HSBColor hsbc;
+
 	// Use this for initialization
 	void Awake () {
 		slam = maxSlam / 2;
@@ -24,11 +25,11 @@ public class PlayerInfo : MonoBehaviour {
 		dunkPanel = GameObject.Find("End").transform;
 		meter.maxValue = maxSlam;
 		outline = meter.transform.FindChild("Background").GetComponent<Outline>();
-		particles = GameObject.Find("Particles");
 		//Debug.Log(outline.transform.name);
 	}
 
 	void Start() {
+		particles = GameObject.Find("Particles");
 		dunkPanel.gameObject.SetActive(false);
 		particles.SetActive(false);
 	}
