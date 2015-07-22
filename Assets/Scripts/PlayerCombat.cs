@@ -21,11 +21,11 @@ public class PlayerCombat : MonoBehaviour {
 		return Quaternion.AngleAxis(1.0f, Vector3.forward) * angle;
 	}
 
-	public void Attack() {
+	public void Attack(float x, float y) {
 		Collider2D[] hits;
 		Vector2 knockback;
 		Vector2 dropForce = Vector2.zero;
-		switch(GetDirection()) {
+		switch(GetDirection(x, y)) {
 		case 0:
 			hits = ForwardAttack();
 			knockback = Vector2.right * transform.localScale.x;
@@ -47,7 +47,7 @@ public class PlayerCombat : MonoBehaviour {
 		//Default
 		case 4:
 			hits = ForwardAttack();
-			knockback = Vector2.right * transform.localScale.x;
+			knockback = Vector2.right * 3 * transform.localScale.x;
 			break;
 		default:
 			hits = new Collider2D[0];
@@ -98,10 +98,7 @@ public class PlayerCombat : MonoBehaviour {
 		return hitCols;
 	}
 
-	private int GetDirection() {
-		float x = Input.GetAxis("Horizontal");
-		float y = Input.GetAxis("Vertical");
-
+	private int GetDirection(float x, float y) {
 		if(x == 0 && y == 0) {
 			return 4;
 		}

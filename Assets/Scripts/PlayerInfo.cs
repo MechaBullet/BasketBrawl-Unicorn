@@ -66,4 +66,8 @@ public class PlayerInfo : MonoBehaviour {
 		slam -= amount;
 		transform.FindChild("Particle System").GetComponent<ParticleSystem>().Emit(1);
 	}
+
+	public IEnumerator Respawn(float time) {
+		yield return new WaitForSeconds(time);
+	}
 }

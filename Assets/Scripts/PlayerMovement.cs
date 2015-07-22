@@ -15,20 +15,20 @@ public class PlayerMovement : MonoBehaviour {
 		body = GetComponent<Rigidbody2D>();
 	}
 
-	public void Move() {
-		if(Input.GetButton("Slam") && GetComponent<PlayerInfo>().slam > 0) {
+	public void Move(float horizontal, bool slamButton, bool jumpButton) {
+		if(slamButton && GetComponent<PlayerInfo>().slam > 0) {
 			GetComponent<PlayerInfo>().DrainSlam(2);
 			speed = origSpeed * 2;
 		}
 		else speed = origSpeed;
 
-		body.AddForce(new Vector2(Input.GetAxis("Horizontal"), 0), ForceMode2D.Impulse);
+		body.AddForce(new Vector2(horizontal, 0), ForceMode2D.Impulse);
 		Vector3 scale = transform.localScale;
-		if(Input.GetAxis("Horizontal") > 0 && scale.x < 0) {
+		if(horizontal > 0 && scale.x < 0) {
 			scale.x *= -1;
 			transform.localScale = scale;
 		}
-		else if(Input.GetAxis("Horizontal") < 0 && scale.x > 0) {
+		else if(horizontal < 0 && scale.x > 0) {
 			scale.x *= -1;
 			transform.localScale = scale;
 		}
@@ -44,7 +44,7 @@ public class PlayerMovement : MonoBehaviour {
 		}
 
 		//Check for jump
-		if(Input.GetButtonDown("Jump")) {
+		if(jumpButton) {
 			//body.AddForce(Vector2.up * jumpHeight, ForceMode2D.Impulse);
 			//vel.y = jumpHeight;
 

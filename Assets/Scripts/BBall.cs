@@ -57,10 +57,13 @@ public class BBall : MonoBehaviour {
 		Renderer renderer =  GetComponent<Renderer>();
 		Rigidbody2D body = GetComponent<Rigidbody2D>();
 
+		player = null;
 		renderer.enabled = false;
 		body.isKinematic = true;
 		body.velocity = Vector2.zero;
 		yield return new WaitForSeconds(time);
+		player = null;
+		GetComponent<CircleCollider2D>().isTrigger = false;
 		renderer.enabled = true;
 		body.isKinematic = false;
 		transform.position = origPos;
