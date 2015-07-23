@@ -1,15 +1,19 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Linq;
 
 public class GameManager : MonoBehaviour {
 
 	GameObject[] spawns;
 	public int players = 2;
+	//IComparer comparer;
 
 	// Use this for initialization
 	void Awake () {
 		spawns = GameObject.FindGameObjectsWithTag("Player Spawn");
+		spawns = spawns.OrderBy(spawn => spawn.name.Last()).ToArray();
 		for(int i = 0; i < spawns.Length && i < players; i++) {
+			//Debug.Log(spawns[i].name.Last());
 			//Get the transform of the spawn point and calculate point below
 			Transform target = spawns[i].transform;
 			RaycastHit2D hit = Physics2D.Raycast(target.position, -Vector2.up);
@@ -32,6 +36,12 @@ public class GameManager : MonoBehaviour {
 			player.GetComponent<PlayerInfo>().team = i + 1;
 			hoop.GetComponent<Hoop>().team = i + 1;
 			//Set the hoop and player number to the spawn numbers
+		}
+
+		if(players < 4) {
+			for(int i = 0; i < players; i++) {
+
+			}
 		}
 	}
 }

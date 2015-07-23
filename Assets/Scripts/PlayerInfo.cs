@@ -20,15 +20,17 @@ public class PlayerInfo : MonoBehaviour {
 	void Awake () {
 		slam = maxSlam / 2;
 		hsbc = HSBColor.FromColor (Color.red);
-		meter = GameObject.Find("Canvas/SlamMeter").GetComponent<Slider>();
 		ball = GameObject.Find("Ball").GetComponent<BBall>();
 		dunkPanel = GameObject.Find("End").transform;
-		meter.maxValue = maxSlam;
-		outline = meter.transform.FindChild("Background").GetComponent<Outline>();
 		//Debug.Log(outline.transform.name);
 	}
 
 	void Start() {
+		//Handle player slam meter
+		meter = GameObject.Find("Canvas/SlamMeter - Player " + team).GetComponent<Slider>();
+		meter.maxValue = maxSlam;
+		outline = meter.transform.FindChild("Background").GetComponent<Outline>();
+
 		particles = GameObject.Find("Particles");
 		dunkPanel.gameObject.SetActive(false);
 		particles.SetActive(false);
