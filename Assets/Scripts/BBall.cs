@@ -26,7 +26,8 @@ public class BBall : MonoBehaviour {
 	}
 
 	void Score() {
-		lastPlayer.GetComponent<PlayerInfo>().slam += value;
+		//lastPlayer.GetComponent<PlayerInfo>().score++;
+		lastPlayer.GetComponent<PlayerInfo>().AddLetter();
 		StartCoroutine(Respawn(2.0f));
 	}
 
@@ -65,6 +66,7 @@ public class BBall : MonoBehaviour {
 		player = null;
 		GetComponent<CircleCollider2D>().isTrigger = false;
 		renderer.enabled = true;
+		body.velocity = Vector2.zero;
 		body.isKinematic = false;
 		transform.position = origPos;
 		respawning = false;

@@ -40,10 +40,9 @@ public class PlayerControl : MonoBehaviour {
 		}
 
 		else if(Input.GetButtonDown("Fire1" + playerString)) {
-			combat.Attack(Input.GetAxis("Horizontal" + playerString), Input.GetAxis("Vertical" + playerString));
+			combat.Attack(Input.GetAxis("Horizontal" + playerString), Input.GetAxis("Vertical" + playerString), Input.GetButton("Slam" + playerString));
 		}
-
-		if(Input.GetAxis ("Vertical" + playerString) < -0.5) {
+		if(Input.GetAxis ("Vertical" + playerString) == -1) {
 			info.Slam();
 		}
 	}

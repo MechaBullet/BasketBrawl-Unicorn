@@ -1,11 +1,10 @@
-﻿using UnityEngine;
+﻿	using UnityEngine;
 using System.Collections;
 
 [RequireComponent (typeof (Rigidbody2D)) ]
 
 public class PlayerMovement : MonoBehaviour {
 	public float speed = 2.0f;
-	public float jumpHeight = 15.0f;
 	private Rigidbody2D body;
 	private LayerMask mask;
 	private float origSpeed;
@@ -15,10 +14,10 @@ public class PlayerMovement : MonoBehaviour {
 		body = GetComponent<Rigidbody2D>();
 	}
 
-	public void Move(float horizontal, bool slamButton, bool jumpButton) {
-		if(slamButton && GetComponent<PlayerInfo>().slam > 0) {
-			GetComponent<PlayerInfo>().DrainSlam(2);
-			speed = origSpeed * 2;
+	public void Move(float horizontal, bool boostButton, bool jumpButton) {
+		if(boostButton && GetComponent<PlayerInfo>().boost > 0) {
+			GetComponent<PlayerInfo>().DrainBoost(10);
+			speed = origSpeed * 1.5f;
 		}
 		else speed = origSpeed;
 
@@ -47,20 +46,19 @@ public class PlayerMovement : MonoBehaviour {
 		if(jumpButton) {
 			//body.AddForce(Vector2.up * jumpHeight, ForceMode2D.Impulse);
 			//vel.y = jumpHeight;
-
 			switch(WallCheck()) {
 			case 0:
-				if(Grounded()) body.AddForce(Vector2.up * jumpHeight, ForceMode2D.Impulse);
+				if(Grounded()) body.AddForce(Vector2.up * speed, ForceMode2D.Impulse);
 				break;
 			case 1:
 				//Debug.Log("Wall on right");
 				body.velocity = Vector2.zero;
-				body.AddForce(Vector2.up * jumpHeight + -Vector2.right * origSpeed, ForceMode2D.Impulse);
+				body.AddForce(Vector2.up * speed + -Vector2.right * origSpeed, ForceMode2D.Impulse);
 				break;
 			case 2:
 				//Debug.Log("Wall on left");
 				body.velocity = Vector2.zero;
-				body.AddForce(Vector2.up * jumpHeight + Vector2.right * origSpeed, ForceMode2D.Impulse);
+				body.AddForce(Vector2.up * speed + Vector2.right * origSpeed, ForceMode2D.Impulse);
 				break;
 			default: break;
 			}

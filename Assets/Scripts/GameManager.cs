@@ -21,7 +21,11 @@ public class GameManager : MonoBehaviour {
 			GameObject hoop = (GameObject)Resources.Load("Hoop");
 			Vector3 hoopOffset = -Vector3.right * target.localScale.x + Vector3.up * (hoop.GetComponent<BoxCollider2D>().size.y * hoop.transform.localScale.y) / 2;
 			//Create the player and hoop
-			GameObject player = (GameObject)Instantiate((GameObject)Resources.Load("Player"), (Vector3)hit.point, target.rotation);
+			GameObject player;
+			if(spawns[i].GetComponent<SpawnInfo>().spawnAi)
+				player = (GameObject)Instantiate((GameObject)Resources.Load("NPC"), (Vector3)hit.point, target.rotation);
+			else
+				player = (GameObject)Instantiate((GameObject)Resources.Load("Player"), (Vector3)hit.point, target.rotation);
 			hoop = (GameObject)Instantiate((GameObject)Resources.Load("Hoop"), (Vector3)hit.point + hoopOffset, target.rotation);
 			Vector3 theScale;
 			theScale = hoop.transform.localScale;
