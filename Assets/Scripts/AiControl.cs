@@ -61,20 +61,33 @@ public class AiControl : MonoBehaviour {
 		jump = false;
 
 		if(ball.player != transform) {
+			if(ball.player != null && info.boost > 0) {
+				if(info.boost > info.maxBoost / 3 || Vector2.Distance(ball.player.position, transform.position) < attackRange * 2) {
+					boosting = true;
+				}
+			}
 			// Calculate movement
 			horizontal = Mathf.Lerp(horizontal, Mathf.Clamp(ball.transform.position.x - transform.position.x, -1, 1), Time.deltaTime * 4);
+			if(Vector2.Distance(ball.transform.position, transform.position) > 10 && info.boost > info.maxBoost / 2) {
+				boosting = true;
+			}
 			// Check jump
-			if(ball.transform.position.y > transform.position.y + 2 && Vector2.Distance(transform.position, ball.transform.position) < jumpRange && !jumping) {
-				StartCoroutine(JumpTimeout());
-				jump = true;
+			if(ball.transform.position.y > transform.position.y + 2  && !jumping) {
+				if(Vector2.Distance(transform.position, ball.transform.position) < jumpRange) {
+					StartCoroutine(JumpTimeout());
+					jump = true;
+				}
+				else if(Vector2.Distance(transform.position, ball.transform.position) >= jumpRange) {
+					boosting = true;
+				}
 			}
 			// Check attack
-			Collider2D[] nearby = Physics2D.OverlapCircleAll(transform.position, attackRange);
+			Collider2D[] nearby = Physics2D.OverlapCircleAll(transform.position, attackRange / 1.5f);
 			for(int i = 0; i < nearby.Length; i++) {
 				if(nearby[i].tag == "Player" && (nearby[i].GetComponent<PlayerInfo>().team%2+1)%2+1 != (info.team%2+1)%2+1) {
 					horizontal = Mathf.Lerp(horizontal, 0, Time.deltaTime * 5);
 					Vector2 direction = nearby[i].transform.position - transform.position;
-					combat.Attack(direction.x, direction.y, false);
+					combat.Attack(direction.x, direction.y, boosting);
 				}
 				   //(int)((team % 2 + 1 ) % 2 + 1)
 			}
@@ -100,7 +113,7 @@ public class AiControl : MonoBehaviour {
 		}
 		// If we are firing and think we can take the shot, we go for it
 		if(fire == 2) {
-			RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, 0.1f, Quaternion.AngleAxis(-(Vector2.Distance(transform.position, hoop.position) * 1.5f), Vector3.forward) * angle);
+			RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, 0.1f, Quaternion.AngleAxis(-(Vector2.Distance(transform.position, hoop.position) * Random.Range(10, 20)/10), Vector3.forward) * angle);
 			foreach(RaycastHit2D hit in hits) {
 				if(hit.transform.tag == "Hoop") {
 					fire++;
@@ -120,13 +133,7 @@ public class AiControl : MonoBehaviour {
 		else if(ball.player == transform && fire == 3) {
 			angle = combat.Throw(angle);
 		}
-		
-		else if(fire == 1) {
-			combat.Attack(Input.GetAxis("Horizontal" + playerString), Input.GetAxis("Vertical" + playerString), false);
-		}
-		if(Input.GetAxis ("Vertical" + playerString) == -1) {
-			info.Slam();
-		}
+
 		if(fire == 3) {
 			fire = 0;
 		}

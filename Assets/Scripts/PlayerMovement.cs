@@ -8,10 +8,12 @@ public class PlayerMovement : MonoBehaviour {
 	private Rigidbody2D body;
 	private LayerMask mask;
 	private float origSpeed;
+	private bool dazed;
 	// Use this for initialization
 	void Start () {
 		origSpeed = speed;
 		body = GetComponent<Rigidbody2D>();
+		dazed = false;
 	}
 
 	public void Move(float horizontal, bool boostButton, bool jumpButton) {
@@ -21,7 +23,10 @@ public class PlayerMovement : MonoBehaviour {
 		}
 		else speed = origSpeed;
 
-		body.AddForce(new Vector2(horizontal, 0), ForceMode2D.Impulse);
+		if(!dazed) {
+			body.AddForce(new Vector2(horizontal, 0), ForceMode2D.Impulse);
+		}
+
 		Vector3 scale = transform.localScale;
 		if(horizontal > 0 && scale.x < 0) {
 			scale.x *= -1;
@@ -33,11 +38,11 @@ public class PlayerMovement : MonoBehaviour {
 		}
 		//Store the current velocity
 		Vector2 vel = body.velocity;
-		if(vel.x > speed) {
+		if(vel.x > speed && !dazed) {
 			vel.x = speed;
 			body.velocity = vel;
 		}
-		else if(vel.x < -speed) {
+		else if(vel.x < -speed && !dazed) {
 			vel.x = -speed;
 			body.velocity = vel;
 		}
@@ -78,6 +83,16 @@ public class PlayerMovement : MonoBehaviour {
 		}
 		return result = 0;
 
+	}
+
+	public void Daze(float time) {
+		StartCoroutine(DazeWait(time));
+	}
+
+	IEnumerator DazeWait(float time) {
+		dazed = true;
+		yield return new WaitForSeconds(time);
+		dazed = false;
 	}
 
 	public bool Grounded() {

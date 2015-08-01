@@ -21,7 +21,13 @@ public class PlayerControl : MonoBehaviour {
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-		movement.Move(Input.GetAxis("Horizontal" + playerString), Input.GetButton("Slam" + playerString), Input.GetButtonDown("Jump" + playerString));
+		if(!info.dunking)
+			movement.Move(Input.GetAxis("Horizontal" + playerString), Input.GetButton("Slam" + playerString), Input.GetButtonDown("Jump" + playerString));
+		else {
+			if(Input.anyKeyDown) {
+				info.ChargeDunk();
+			}
+		}
 	}
 
 	void Update() {

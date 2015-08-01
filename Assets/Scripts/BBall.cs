@@ -36,7 +36,7 @@ public class BBall : MonoBehaviour {
 		if(col.transform.tag == "Player" && player == null) {
 			player = col.transform;
 		}
-		if(col.transform.tag == "Hoop") {
+		if(col.transform.tag == "Hoop" && col.transform.root.GetComponent<Hoop>().team != ((lastPlayer.GetComponent<PlayerInfo>().team % 2 + 1 ) % 2 + 1) ) {
 			Score ();
 		}
 	}
@@ -61,6 +61,7 @@ public class BBall : MonoBehaviour {
 		player = null;
 		renderer.enabled = false;
 		body.isKinematic = true;
+		transform.position = origPos;
 		body.velocity = Vector2.zero;
 		yield return new WaitForSeconds(time);
 		player = null;
@@ -68,7 +69,6 @@ public class BBall : MonoBehaviour {
 		renderer.enabled = true;
 		body.velocity = Vector2.zero;
 		body.isKinematic = false;
-		transform.position = origPos;
 		respawning = false;
 	}
 }

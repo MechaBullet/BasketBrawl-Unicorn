@@ -11,7 +11,7 @@ public class PlayerCombat : MonoBehaviour {
 	}
 
 	public Vector2 Throw(Vector2 angle) {
-		ball.GetComponent<BBall>().Drop(0.05f);
+		ball.GetComponent<BBall>().Drop(0.025f);
 		//ball.transform.position = ball.transform.position + new Vector3(angle.x * transform.localScale.x, angle.y, 0);
 		ball.GetComponent<Rigidbody2D>().velocity = new Vector2(angle.x * transform.localScale.x * 25, angle.y * 25);//, ForceMode2D.Impulse);
 		return Vector2.right;
@@ -29,10 +29,17 @@ public class PlayerCombat : MonoBehaviour {
 			Collider2D[] hits;
 			Vector2 knockback;
 			Vector2 dropForce = Vector2.zero;
+			float dazeTime = 0;
 			switch(GetDirection(x, y)) {
 			case 0:
+			case 4:
 				hits = ForwardAttack();
+				dazeTime = 0.8f;
 				knockback = Vector2.right * transform.localScale.x;
+				if(slam) {
+					knockback *= 1.5f;
+					dropForce = Vector2.up * force + Vector2.right * force * -transform.localScale.x;
+				}
 				break;
 	/*		case 1:
 				hits = BackAttack();
@@ -41,18 +48,21 @@ public class PlayerCombat : MonoBehaviour {
 	*/
 			case 2:
 				hits = UpAttack();
-				knockback = Vector2.up * 2;
-				dropForce = -knockback / 2;
+				knockback = Vector2.up;
+				//dropForce = -knockback / 2;
+				if (slam) 
+					knockback = knockback * 2;
 				break;
 			case 3:
 				hits = DownAttack();
 				knockback = -Vector2.up;
+				dropForce = Vector2.up * 2 + Vector2.right * -transform.localScale.x * 2;
+				if (slam) {
+					knockback = knockback * 2;
+					dazeTime = 2;
+				}
 				break;
 			//Default
-			case 4:
-				hits = ForwardAttack();
-				knockback = Vector2.right * 3 * transform.localScale.x;
-				break;
 			default:
 				hits = new Collider2D[0];
 				knockback = Vector2.zero;
@@ -61,20 +71,21 @@ public class PlayerCombat : MonoBehaviour {
 
 			for(int i = 0; i < hits.Length; i++) {
 				if(hits[i].tag == "Player" && hits[i] != transform.GetComponent<Collider2D>()) {
-					Hit (hits[i], knockback, dropForce);
+					Hit (hits[i], knockback, dropForce, dazeTime);
 				}
 			}
 		}
 	}
 
-	private void Hit(Collider2D player, Vector2 knockback, Vector2 dropForce) {
+	private void Hit(Collider2D player, Vector2 knockback, Vector2 dropForce, float dazeTime) {
+		player.GetComponent<PlayerMovement>().Daze(dazeTime);
 		//Debug.Log("Hit " + player.name);
 		if(Mathf.Abs(knockback.x) > Mathf.Abs(knockback.y)) {
 			player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
 		}
 		player.GetComponent<Rigidbody2D>().AddForce(knockback * force, ForceMode2D.Impulse);
 		if(dropForce != Vector2.zero && ball.GetComponent<BBall>().player == player.transform) {
-			ball.GetComponent<BBall>().Drop(0.05f);
+			ball.GetComponent<BBall>().Drop(0.2f);
 			ball.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
 			ball.GetComponent<Rigidbody2D>().AddForce(dropForce, ForceMode2D.Impulse);
 		}
