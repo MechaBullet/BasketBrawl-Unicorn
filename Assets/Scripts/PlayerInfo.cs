@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿
+using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 
@@ -11,7 +12,9 @@ public class PlayerInfo : MonoBehaviour {
 	public int rechargeRate = 3;
 	public int team;
 	public int dunkThreshold = 20;
+	public bool dunking;
 
+	private Vector2 origPos;
 	string victoryString;
 	GameObject[] particles;
 	bool boosting;
@@ -21,8 +24,6 @@ public class PlayerInfo : MonoBehaviour {
 	Outline outline;
 	HSBColor hsbc;
 	Text mashText;
-
-	public bool dunking;
 	int dunkCount;
 
 	// Use this for initialization
@@ -57,6 +58,7 @@ public class PlayerInfo : MonoBehaviour {
 		}
 		victoryString = slamText.text;
 		slamText.text = "";
+		origPos = transform.position;
 	}
 
 	// Update is called once per frame
@@ -96,21 +98,58 @@ public class PlayerInfo : MonoBehaviour {
 
 	public void LateUpdate() {
 		boosting = false;
+		if(transform.position.y < origPos.y - 100)
+		StartCoroutine(Respawn(0));
 	}
 
 	public void Slam() {
-		if(ball.player == transform && slamText.text.Length >= victoryString.Length 
+		if(ball.player == transform && slamText.text.Length >= victoryString.Length && !dunking
 		   && GetComponent<BoxCollider2D>().IsTouching(GameObject.Find("SlamZone").GetComponent<BoxCollider2D>())) {
 			dunkCount = 0;
 			dunking = true;
-			mashText.text = "MASH: " + dunkCount + "/" + dunkThreshold;
+			GetComponent<PlayerControl>().SetNewTargetKey();
+			//mashText.text = "DUNK: " + dunkCount + "/" + dunkThreshold;
+			string key = GetComponent<PlayerControl>().targetKey;
+			int dir = GetComponent<PlayerControl>().targetDir;
+			string displayText = key;
+			if (key == "Horizontal") {
+				if(dir == 1)
+					displayText = "Right";
+				else
+					displayText = "Left";
+			}
+			if (key == "Vertical") {
+				if(dir == 1)
+					displayText = "Up";
+				else
+					displayText = "Down";
+			}
+			mashText.text = displayText;
 		}
 	}
 
-	public void ChargeDunk() {
+	public void ChargeDunk(string key, int dir) {
 		dunkCount++;
-		mashText.text = "MASH: " + dunkCount + "/" + dunkThreshold;
+		string displayText = key;
+		if (key == "Horizontal") {
+			if(dir == 1)
+				displayText = "Left";
+			else
+				displayText = "Right";
+		}
+		if (key == "Vertical") {
+			if(dir == 1)
+				displayText = "Down";
+			else
+				displayText = "Up";
+		}
+		mashText.text = displayText;
+
+		//StartCoroutine(DunkTimeOut(2, dunkCount));
+
 		if(dunkCount >= dunkThreshold) {
+			dunking = false;
+			dunkCount = 0;
 			dunkPanel.gameObject.SetActive(true);
 		}
 	}
@@ -121,8 +160,19 @@ public class PlayerInfo : MonoBehaviour {
 		transform.FindChild("Particle System").GetComponent<ParticleSystem>().Emit(1);
 	}
 
+	public IEnumerator DunkTimeOut(float time, int currentCount) {
+		yield return new WaitForSeconds(time);
+		if(dunkCount <= currentCount) {
+			dunking = false;
+			dunkCount = 0;
+			mashText.text = "TIMED OUT";
+			yield return new WaitForSeconds(0.5f);
+		}
+	}
+
 	public IEnumerator Respawn(float time) {
 		yield return new WaitForSeconds(time);
+		transform.position = origPos;
 	}
 
 	public void AddLetter() {

@@ -9,6 +9,15 @@ public class PlayerControl : MonoBehaviour {
 	private Vector2 angle;
 	string playerString;
 
+	string[] inputs = new string[6]{"Horizontal","Vertical","Fire1","Fire2","Jump","Slam"};
+	public int targetDir;
+	public Sprite[] inputIcons; /*= new string[6] {
+											{"InputIcons_D", "InputIcons_W", "InputIcons_Mouse1", "InputIcons_Mouse2", "InputIcons_Space", "InputIcons_Shift"},
+											{"InputIcons_A", "InputIcons_S", null, null, null, null}
+	};*/
+	public string targetKey = "";
+	public string targetIcon = "";
+
 	// Use this for initialization
 	void Start () {
 		movement = GetComponent<PlayerMovement>();
@@ -23,14 +32,13 @@ public class PlayerControl : MonoBehaviour {
 	void FixedUpdate () {
 		if(!info.dunking)
 			movement.Move(Input.GetAxis("Horizontal" + playerString), Input.GetButton("Slam" + playerString), Input.GetButtonDown("Jump" + playerString));
-		else {
-			if(Input.anyKeyDown) {
-				info.ChargeDunk();
-			}
-		}
 	}
 
 	void Update() {
+		if(info.dunking && targetKey != "") {
+			CheckTargetKey();
+		}
+
 		if(ball.player == transform && Input.GetButtonDown("Fire1" + playerString)) {
 			angle = Vector2.right;
 		}
@@ -51,5 +59,33 @@ public class PlayerControl : MonoBehaviour {
 		if(Input.GetAxis ("Vertical" + playerString) == -1) {
 			info.Slam();
 		}
+	}
+
+	public void CheckTargetKey() {
+		if(targetKey == "Horizontal" || targetKey == "Vertical") {
+			if(Mathf.Floor(Input.GetAxis(targetKey + playerString)*targetDir) == targetDir) {
+				SetNewTargetKey();
+				info.ChargeDunk(targetKey, targetDir);
+			}
+		}
+		else if (Input.GetButtonDown(targetKey + playerString)) {
+			SetNewTargetKey();
+			info.ChargeDunk(targetKey, targetDir);
+		}
+	}
+
+	public void SetNewTargetKey() {
+		int yNum = 0;
+		int num = Random.Range(0, inputs.Length - 1);
+
+		targetKey = inputs[num];
+		if(targetKey == "Horizontal" || targetKey == "Vertical") {
+			int[] options = new int[2]{-1,1};
+			targetDir = options[Random.Range(0, 1)];
+			if(targetDir == 1) num += 6;
+		}
+		Sprite sprite = inputIcons[num];
+		transform.FindChild("InputPrompt").GetComponent<SpriteRenderer>().sprite = sprite;
+		Debug.Log(sprite);
 	}
 }

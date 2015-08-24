@@ -1,0 +1,231 @@
+fileFormatVersion: 2
+guid: c766c5380f0a0154bb30e9233221c42b
+timeCreated: 1440368801
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: InputIcons_0
+    21300002: InputIcons_1
+    21300004: InputIcons_2
+    21300006: InputIcons_3
+    21300008: InputIcons_4
+    21300010: InputIcons_5
+    21300012: InputIcons_6
+    21300014: InputIcons_7
+    21300016: InputIcons_8
+    21300018: InputIcons_9
+    21300020: InputIcons_10
+    21300022: InputIcons_11
+    21300024: InputIcons_12
+    21300026: InputIcons_13
+    21300028: InputIcons_14
+    21300030: InputIcons_15
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 8
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: InputIcons_0
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 694
+        width: 199
+        height: 199
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: InputIcons_1
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 694
+        width: 199
+        height: 199
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: InputIcons_2
+      rect:
+        serializedVersion: 2
+        x: 467
+        y: 694
+        width: 199
+        height: 199
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: InputIcons_3
+      rect:
+        serializedVersion: 2
+        x: 693
+        y: 694
+        width: 199
+        height: 199
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: InputIcons_4
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 469
+        width: 199
+        height: 199
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: InputIcons_5
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 469
+        width: 199
+        height: 199
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: InputIcons_6
+      rect:
+        serializedVersion: 2
+        x: 467
+        y: 469
+        width: 199
+        height: 199
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: InputIcons_7
+      rect:
+        serializedVersion: 2
+        x: 693
+        y: 469
+        width: 199
+        height: 199
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: InputIcons_8
+      rect:
+        serializedVersion: 2
+        x: 13
+        y: 242
+        width: 199
+        height: 199
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: InputIcons_9
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 242
+        width: 199
+        height: 199
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: InputIcons_10
+      rect:
+        serializedVersion: 2
+        x: 467
+        y: 242
+        width: 199
+        height: 199
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: InputIcons_11
+      rect:
+        serializedVersion: 2
+        x: 693
+        y: 242
+        width: 199
+        height: 199
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: InputIcons_12
+      rect:
+        serializedVersion: 2
+        x: 13
+        y: 15
+        width: 199
+        height: 199
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: InputIcons_13
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 15
+        width: 199
+        height: 199
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: InputIcons_14
+      rect:
+        serializedVersion: 2
+        x: 467
+        y: 15
+        width: 199
+        height: 199
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: InputIcons_15
+      rect:
+        serializedVersion: 2
+        x: 693
+        y: 15
+        width: 199
+        height: 199
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

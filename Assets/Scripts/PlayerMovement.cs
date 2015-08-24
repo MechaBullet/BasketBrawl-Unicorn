@@ -96,9 +96,9 @@ public class PlayerMovement : MonoBehaviour {
 	}
 
 	public bool Grounded() {
-		RaycastHit2D hit;
-		bool result = Physics2D.BoxCast(transform.position, GetComponent<BoxCollider2D>().size, 0, -Vector2.up, 0.5f);
-		//Debug.Log(result);
-		return result;
+		LayerMask layerMask = 1 << LayerMask.NameToLayer("Player");
+		layerMask = ~layerMask;
+		RaycastHit2D hit = Physics2D.BoxCast(transform.position, GetComponent<BoxCollider2D>().size, 0, -Vector2.up, 0.5f, layerMask);
+		return hit;
 	}
 }
